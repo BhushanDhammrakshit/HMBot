@@ -1,0 +1,22 @@
+name: Run Google Colab Script
+
+# Set the schedule (e.g., 9 AM and 3 PM UTC)
+on:
+  schedule:
+    - cron: '0 9,15 * * *'   # Runs at 9 AM and 3 PM UTC daily
+  workflow_dispatch:          # Manual trigger option
+
+jobs:
+  run-colab:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install nbconvert
+      run: pip install nbconvert
+
+    - name: Execute Colab Notebook
+      run: |
+        jupyter nbconvert --to notebook --execute my_colab_script.ipynb --output output.ipynb
